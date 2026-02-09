@@ -3,199 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gibran Adzhar | Official</title>
+    <title>Gibran Adzhar | Encrypted Access</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
 
     <style>
         :root {
             --bg: #020617;
-            --text: #f8fafc;
             --accent: #22d3ee;
-            --card: rgba(15, 23, 42, 0.8);
-            --glow: rgba(34, 211, 238, 0.5);
+            --success: #22c55e;
+            --error: #ef4444;
+            --text: #f8fafc;
         }
 
-        .light-mode {
-            --bg: #f1f5f9;
-            --text: #0f172a;
-            --accent: #0ea5e9;
-            --card: rgba(255, 255, 255, 0.8);
-            --glow: rgba(14, 165, 233, 0.2);
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Courier New', Courier, monospace; }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
+        body { background: var(--bg); color: var(--text); overflow: hidden; height: 100vh; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* 1. Efek Scanline (Garis-garis layar TV jadul) */
-        body::after {
-            content: " ";
+        /* --- LOGIN SCREEN --- */
+        #login-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-            background-size: 100% 3px, 3px 100%;
-            pointer-events: none; z-index: 10;
+            background: #000; z-index: 100; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; transition: 1s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* 2. Moving Cyber Gradients */
-        .orb {
-            position: absolute; width: 500px; height: 500px;
-            background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
-            border-radius: 50%; filter: blur(60px); z-index: -1;
-            animation: move 15s infinite alternate ease-in-out;
+        .terminal-box {
+            width: 90%; max-width: 350px; padding: 25px; border: 1px solid var(--accent);
+            background: rgba(34, 211, 238, 0.02); box-shadow: 0 0 20px rgba(34, 211, 238, 0.2);
+            text-align: center; position: relative;
         }
 
-        @keyframes move {
-            0% { transform: translate(-20%, -20%); }
-            100% { transform: translate(20%, 20%); }
+        .status-msg { font-size: 0.7rem; color: var(--accent); margin-bottom: 20px; text-align: left; line-height: 1.5; }
+
+        .login-input {
+            width: 100%; background: transparent; border: 1px solid rgba(34, 211, 238, 0.3);
+            color: var(--accent); padding: 12px; outline: none; margin-bottom: 15px;
+            text-align: center; font-size: 1rem; letter-spacing: 2px;
         }
 
-        .container { position: relative; z-index: 5; text-align: center; width: 90%; max-width: 400px; }
-
-        /* 3. Avatar dengan Border Neon Berputar */
-        .profile-wrapper {
-            position: relative; width: 150px; height: 150px; margin: 0 auto 20px;
-            display: flex; justify-content: center; align-items: center;
+        .login-btn {
+            width: 100%; background: var(--accent); color: #000; border: none;
+            padding: 12px; font-weight: 900; cursor: pointer; text-transform: uppercase;
         }
 
-        .profile-wrapper::before {
-            content: ""; position: absolute; width: 105%; height: 105%;
-            border-radius: 50%; background: conic-gradient(transparent, var(--accent), transparent);
-            animation: rotate 3s linear infinite;
+        #feedback-msg { font-weight: bold; font-size: 0.8rem; margin-top: 15px; letter-spacing: 2px; height: 20px; }
+
+        /* --- MAIN CONTENT --- */
+        #main-content {
+            display: none; opacity: 0; justify-content: center; align-items: center;
+            min-height: 100vh; transition: 1.5s;
         }
 
-        @keyframes rotate { to { transform: rotate(360deg); } }
+        .container { text-align: center; width: 90%; max-width: 400px; }
+        .profile-img { width: 130px; height: 130px; border-radius: 50%; border: 3px solid var(--accent); margin-bottom: 20px; }
+        .links-container { display: flex; flex-direction: column; gap: 12px; }
+        .link-card { background: rgba(255,255,255,0.03); padding: 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); text-decoration: none; color: #fff; display: flex; justify-content: space-between; }
 
-        .profile-img {
-            width: 140px; height: 140px; border-radius: 50%;
-            object-fit: cover; z-index: 2; border: 4px solid var(--bg);
+        /* Animations */
+        .shake { animation: shake 0.4s; border-color: var(--error) !important; box-shadow: 0 0 30px var(--error) !important; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
         }
-
-        h1 { font-size: 2.5rem; font-weight: 900; letter-spacing: -2px; text-transform: uppercase; margin-bottom: 5px; }
-
-        .typing-container { font-size: 1.1rem; color: var(--accent); font-family: 'Courier New', Courier, monospace; margin-bottom: 30px; }
-
-        /* 4. Glassmorphism Card dengan Border Glow */
-        .link-card {
-            background: var(--card);
-            backdrop-filter: blur(15px);
-            padding: 20px; border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            text-decoration: none; color: var(--text);
-            display: flex; align-items: center; justify-content: space-between;
-            font-weight: 700; margin-bottom: 15px;
-            transition: 0.3s; position: relative; overflow: hidden;
-        }
-
-        .link-card::before {
-            content: ""; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: 0.5s;
-        }
-
-        .link-card:hover::before { left: 100%; }
-        .link-card:hover { border-color: var(--accent); transform: scale(1.05) translateY(-5px); box-shadow: 0 0 20px var(--glow); }
-
-        .icon-text { display: flex; align-items: center; gap: 15px; }
-        .link-card i { font-size: 1.5rem; }
-
-        .controls { display: flex; justify-content: center; gap: 15px; margin-top: 30px; }
-        
-        .btn-control {
-            background: transparent; border: 1px solid var(--accent);
-            color: var(--accent); padding: 10px 20px; border-radius: 4px;
-            font-weight: bold; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px;
-        }
-
-        .btn-control:hover { background: var(--accent); color: var(--bg); box-shadow: 0 0 15px var(--accent); }
-
-        #toast {
-            position: fixed; top: 20px; right: -250px; background: var(--accent);
-            color: #000; padding: 15px 25px; font-weight: 900; border-radius: 4px; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+        .fade-out { opacity: 0; transform: scale(1.5); pointer-events: none; }
     </style>
 </head>
 <body>
 
-    <div id="toast">ACCESS GRANTED: COPIED</div>
-    <div class="orb"></div>
-    <audio id="click-sound" src="https://www.fesliyanstudios.com/play-mp3/6" preload="auto"></audio>
+    <audio id="alarm-sound" src="https://www.soundjay.com/buttons/beep-04.mp3" preload="auto"></audio>
+    <audio id="success-sound" src="https://www.soundjay.com/buttons/button-3.mp3" preload="auto"></audio>
 
-    <div class="container">
-        <div class="profile-wrapper">
-            <img src="profile.png" alt="Gibran Adzhar" class="profile-img">
+    <div id="login-screen">
+        <div class="terminal-box" id="gateBox">
+            <div class="status-msg">
+                > SYSTEM: READY<br>
+                > ENCRYPTION: ACTIVE<br>
+                > INPUT_KEY_
+            </div>
+            <input type="password" class="login-input" id="accessKey" placeholder="********" onkeydown="if(event.key==='Enter') verify()">
+            <button class="login-btn" onclick="verify()">AUTHORIZE</button>
+            <div id="feedback-msg"></div>
         </div>
-        
-        <h1>Gibran Adzhar</h1>
-        <div class="typing-container">
-            <span id="typed"></span>
-        </div>
+    </div>
 
-        <div class="links-container">
-            <a href="https://instagram.com/gbrnadzhr" class="link-card" data-tilt onclick="playClick()">
-                <div class="icon-text">
-                    <i class="fa-brands fa-instagram"></i>
-                    <span>INSTAGRAM_MODULE</span>
-                </div>
-                <i class="fa-solid fa-code"></i>
-            </a>
+    <div id="main-content">
+        <div class="container">
+            <img src="profile.png" alt="Gibran" class="profile-img">
+            <h1 style="letter-spacing: 3px;">GIBRAN ADZHAR</h1>
+            <div id="typed-strings" style="display: none;">
+                <p>> ACCESS GRANTED</p>
+                <p>> LOADING DATA...</p>
+                <p>> WELCOME USER_GIBRAN</p>
+            </div>
+            <div style="color: var(--accent); margin-bottom: 30px;"><span id="typed"></span></div>
 
-            <a href="https://wa.me/6283827963304" class="link-card" data-tilt onclick="playClick()">
-                <div class="icon-text">
-                    <i class="fa-brands fa-whatsapp"></i>
-                    <span>WHATSAPP_LINK</span>
-                </div>
-                <i class="fa-solid fa-code"></i>
-            </a>
-
-            <a href="https://github.com/gibranadzhar" class="link-card" data-tilt onclick="playClick()">
-                <div class="icon-text">
-                    <i class="fa-brands fa-github"></i>
-                    <span>GITHUB_REPO</span>
-                </div>
-                <i class="fa-solid fa-code"></i>
-            </a>
-        </div>
-
-        <div class="controls">
-            <button class="btn-control" onclick="copyLink(); playClick()">[ COPY_URL ]</button>
-            <button class="btn-control" onclick="toggleTheme(); playClick()">[ UI_THEME ]</button>
+            <div class="links-container">
+                <a href="https://instagram.com/gbrnadzhr" class="link-card"><span>INSTAGRAM</span><i class="fa-solid fa-link"></i></a>
+                <a href="https://wa.me/6283827963304" class="link-card"><span>WHATSAPP</span><i class="fa-solid fa-link"></i></a>
+                <a href="https://github.com/gibranadzhar" class="link-card"><span>GITHUB</span><i class="fa-solid fa-link"></i></a>
+            </div>
         </div>
     </div>
 
     <script>
-        VanillaTilt.init(document.querySelectorAll(".link-card"), { max: 20, speed: 1000, glare: true, "max-glare": 0.5 });
+        function verify() {
+            const input = document.getElementById('accessKey');
+            const box = document.getElementById('gateBox');
+            const feedback = document.getElementById('feedback-msg');
+            const alarm = document.getElementById('alarm-sound');
+            const success = document.getElementById('success-sound');
+            
+            if(input.value.toLowerCase() === 'acagibran') {
+                // PASSWORD BENAR
+                success.play();
+                feedback.style.color = "var(--success)";
+                feedback.innerText = "PASSWORD BENAR: ACCESS GRANTED";
+                box.style.borderColor = "var(--success)";
+                
+                setTimeout(() => {
+                    document.getElementById('login-screen').classList.add('fade-out');
+                    setTimeout(() => {
+                        document.getElementById('login-screen').style.display = 'none';
+                        const main = document.getElementById('main-content');
+                        main.style.display = 'flex';
+                        setTimeout(() => { main.style.opacity = '1'; startTyped(); }, 50);
+                    }, 1000);
+                }, 1000);
 
-        function playClick() {
-            const audio = document.getElementById('click-sound');
-            audio.currentTime = 0; audio.play();
+            } else {
+                // PASSWORD SALAH
+                alarm.play(); // Bunyikan alarm
+                box.classList.add('shake');
+                feedback.style.color = "var(--error)";
+                feedback.innerText = "PASSWORD SALAH: ACCESS DENIED";
+                input.value = '';
+                
+                setTimeout(() => {
+                    box.classList.remove('shake');
+                }, 400);
+            }
         }
 
-        var typed = new Typed('#typed', {
-            strings: ['> INITIALIZING...', '> DIGITAL_CONTENT_CREATOR', '> DEVELOPER_ENTHUSIAST', '> GAMER_LEVEL_99', '> UI_EXPLORER'],
-            typeSpeed: 40, backSpeed: 20, loop: true
-        });
-
-        function toggleTheme() { document.body.classList.toggle('light-mode'); }
-
-        function copyLink() { 
-            navigator.clipboard.writeText(window.location.href);
-            const toast = document.getElementById('toast');
-            toast.style.right = '20px';
-            setTimeout(() => { toast.style.right = '-250px'; }, 3000);
+        function startTyped() {
+            new Typed('#typed', {
+                strings: ['DIGITAL CONTENT CREATOR', 'DEVELOPER ENTHUSIAST', 'GAMER', 'SYSTEM ONLINE.'],
+                typeSpeed: 40,
+                backSpeed: 20,
+                loop: true
+            });
         }
     </script>
 </body>
