@@ -11,7 +11,7 @@
     <style>
         :root {
             --bg: #020617;
-            --accent: #1DB954; /* Hijau Spotify */
+            --accent: #1DB954; 
             --cyber: #22d3ee;
             --text: #f8fafc;
             --error: #ff3333;
@@ -20,7 +20,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Courier New', Courier, monospace; }
         body { background: var(--bg); color: var(--text); overflow: hidden; height: 100vh; }
 
-        /* --- LAYAR LOGIN --- */
+        /* --- LOGIN SCREEN --- */
         #auth-screen {
             position: fixed; width: 100%; height: 100%; background: #000;
             display: flex; justify-content: center; align-items: center; z-index: 100;
@@ -29,124 +29,88 @@
             width: 90%; max-width: 350px; padding: 25px; border: 1px solid var(--cyber);
             background: rgba(34, 211, 238, 0.02); text-align: center;
         }
-        .tab-menu { display: flex; gap: 5px; margin-bottom: 20px; }
-        .tab-btn { flex: 1; padding: 8px; background: transparent; border: 1px solid var(--cyber); color: var(--cyber); cursor: pointer; font-size: 0.6rem; }
-        .tab-btn.active { background: var(--cyber); color: #000; }
-        input { width: 100%; background: transparent; border: 1px solid var(--cyber); color: var(--cyber); padding: 10px; margin-bottom: 10px; outline: none; text-align: center; }
+        input { width: 100%; background: transparent; border: 1px solid var(--cyber); color: var(--cyber); padding: 10px; margin: 15px 0; outline: none; text-align: center; }
         .main-btn { width: 100%; background: var(--cyber); color: #000; border: none; padding: 12px; font-weight: bold; cursor: pointer; }
 
-        /* --- HALAMAN UTAMA --- */
+        /* --- PAGES --- */
         #main-content, #music-page { 
             display: none; opacity: 0; position: fixed; width: 100%; height: 100%;
             flex-direction: column; justify-content: center; align-items: center; transition: 0.5s; 
         }
 
         .container { text-align: center; width: 90%; max-width: 400px; }
-        .profile-img { width: 110px; height: 110px; border-radius: 50%; border: 2px solid var(--cyber); margin-bottom: 20px; cursor: pointer; object-fit: cover; }
+        .profile-img { width: 110px; height: 110px; border-radius: 50%; border: 2px solid var(--cyber); margin-bottom: 20px; cursor: pointer; }
         
-        .link-card { 
-            display: flex; justify-content: space-between; background: rgba(255,255,255,0.05); 
-            padding: 15px; border: 1px solid rgba(34, 211, 238, 0.2); margin-bottom: 10px; 
-            text-decoration: none; color: white; border-radius: 8px; cursor: pointer; transition: 0.3s;
-        }
-        .link-card:hover { border-color: var(--accent); transform: translateX(5px); background: rgba(29, 185, 84, 0.1); }
+        /* --- LIST LAGU --- */
+        .track-list { margin-top: 20px; text-align: left; background: rgba(255,255,255,0.05); border-radius: 10px; border: 1px solid rgba(34, 211, 238, 0.2); }
+        .track-item { padding: 15px; border-bottom: 1px solid rgba(34, 211, 238, 0.1); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
+        .track-item:hover { background: rgba(29, 185, 84, 0.1); color: var(--accent); }
+        .track-item i { font-size: 0.8rem; }
 
-        /* --- WRAPPER SPOTIFY --- */
-        .spotify-wrapper {
-            width: 100%; background: #000; border-radius: 12px; overflow: hidden;
-            border: 1px solid var(--accent); margin-top: 10px; box-shadow: 0 0 15px rgba(29, 185, 84, 0.3);
-        }
-
-        /* --- ANIMASI GETAR (CRASH) --- */
-        .crash-active { animation: extreme-shake 0.1s infinite !important; filter: hue-rotate(90deg) contrast(150%) !important; }
-        @keyframes extreme-shake {
-            0% { transform: translate(0, 0); }
-            25% { transform: translate(-4px, 4px); }
-            50% { transform: translate(4px, -4px); }
-            100% { transform: translate(0, 0); }
-        }
+        /* --- SPOTIFY PLAYER (STIFF/FIXED) --- */
+        #player-container { width: 100%; margin-top: 20px; min-height: 80px; }
 
         .fade-out { opacity: 0; pointer-events: none; transform: scale(0.9); transition: 0.5s; }
     </style>
 </head>
 <body>
 
-    <audio id="beep" src="https://assets.mixkit.co/active_storage/sfx/1614/1614-preview.mp3" preload="auto"></audio>
-
     <div id="auth-screen">
         <div class="auth-container">
-            <div class="tab-menu">
-                <button class="tab-btn active" onclick="showTab('key')">MASTER_KEY</button>
-                <button class="tab-btn" onclick="showTab('user')">USER_LOGIN</button>
-            </div>
-            <div id="tab-key"><input type="password" id="m-key" placeholder="PASS_CODE"><button class="main-btn" onclick="authKey()">VERIFY SYSTEM</button></div>
-            <div id="tab-user" style="display:none;"><input type="text" id="l-u" placeholder="User"><input type="password" id="l-p" placeholder="Pass"><button class="main-btn" onclick="authLogin()">LOGIN</button></div>
-            <div id="auth-msg" style="font-size: 0.6rem; margin-top: 10px; color: var(--error);"></div>
+            <p style="color:var(--cyber); font-size:0.7rem">> ACCESS_ID_REQUIRED</p>
+            <input type="password" id="m-key" placeholder="MASTER_KEY">
+            <button class="main-btn" onclick="authKey()">VERIFY</button>
         </div>
     </div>
 
     <div id="main-content">
-        <div id="content-wrapper" class="container">
-            <img src="profile.png" class="profile-img" onclick="triggerCrash()">
-            <h1 style="font-size: 1.5rem; letter-spacing: 2px;">GIBRAN ADZHAR</h1>
-            <div style="color: var(--cyber); margin-bottom: 25px; font-size: 0.8rem; height: 20px;"><span id="typed"></span></div>
+        <div class="container">
+            <img src="profile.png" class="profile-img">
+            <h1>GIBRAN ADZHAR</h1>
+            <div style="color: var(--cyber); margin-bottom: 25px;"><span id="typed"></span></div>
             
-            <div onclick="switchPage('music-page')" class="link-card" style="border-color: var(--accent);">
-                <span style="color: var(--accent); font-weight: bold;">[ MUSIC_STATION ]</span><i class="fa-brands fa-spotify" style="color: var(--accent);"></i>
+            <div onclick="switchPage('music-page')" style="cursor:pointer; border: 1px solid var(--accent); padding: 15px; border-radius: 8px; color: var(--accent);">
+                <span>[ OPEN_PLAYER_STATION ]</span>
             </div>
             
-            <a href="https://instagram.com/gbrnadzhr" class="link-card" target="_blank"><span>INSTAGRAM</span><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://wa.me/6283827963304" class="link-card" target="_blank"><span>WHATSAPP</span><i class="fa-brands fa-whatsapp"></i></a>
-            <a href="https://github.com/gibranadzhar" class="link-card" target="_blank"><span>GITHUB</span><i class="fa-brands fa-github"></i></a>
-            
-            <button id="logout-btn" onclick="logout()" style="background:var(--error); border:none; color:#000; padding:10px; width:100%; font-weight:bold; cursor:pointer; margin-top:30px; border-radius: 5px;">[ REPAIR / LOGOUT ]</button>
+            <button onclick="location.reload()" style="background:none; color:var(--error); border:none; margin-top:40px; cursor:pointer;">[ LOGOUT ]</button>
         </div>
     </div>
 
     <div id="music-page">
         <div class="container">
-            <h2 style="color: var(--accent); margin-bottom: 15px; font-size: 1rem; letter-spacing: 3px;">DATABASE_PLAYLIST</h2>
-            <div class="spotify-wrapper">
-                <iframe style="border-radius:12px" 
-                    src="https://open.spotify.com/embed/playlist/4m1uUAtNclbYJ7hXjR0iS9?utm_source=generator&theme=0" 
-                    width="100%" height="400" frameBorder="0" allowfullscreen="" 
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
-                </iframe>
+            <h2 style="color: var(--accent); font-size: 0.9rem; letter-spacing: 2px;">SELECT_YOUR_TRACK</h2>
+            
+            <div id="player-container">
+                <p style="font-size: 0.7rem; color: #444; padding: 20px;">Klik lagu di bawah untuk memutar...</p>
             </div>
-            <button class="main-btn" style="margin-top: 20px; background: transparent; border: 1px solid var(--cyber); color: var(--cyber);" onclick="switchPage('main-content')">KEMBALI KE PROFIL</button>
+
+            <div class="track-list">
+                <div class="track-item" onclick="playTrack('7n05g9m4A8p13zXv7iN34M')">
+                    <span>01. Lagu Pilihan Gibran</span>
+                    <i class="fa-solid fa-play"></i>
+                </div>
+
+                <div class="track-item" onclick="playTrack('4cOdzhRZWLZBvfb9909090')">
+                    <span>02. Chill Beats</span>
+                    <i class="fa-solid fa-play"></i>
+                </div>
+            </div>
+
+            <button class="main-btn" style="margin-top: 30px; background: transparent; border: 1px solid var(--cyber); color: var(--cyber);" onclick="switchPage('main-content')">KEMBALI</button>
         </div>
     </div>
 
     <script>
-        let clickCount = 0;
-
-        function showTab(t) {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
-            ['tab-key','tab-user'].forEach(id => document.getElementById(id).style.display = (id === 'tab-'+t) ? 'block' : 'none');
-        }
-
         function authKey() {
-            if(document.getElementById('m-key').value.toLowerCase() === 'acagibran') grant();
-            else document.getElementById('auth-msg').innerText = 'ERROR: INVALID_KEY';
-        }
-
-        function authLogin() {
-            const u = document.getElementById('l-u').value;
-            const p = document.getElementById('l-p').value;
-            if(localStorage.getItem('u_'+u) === p) grant();
-            else document.getElementById('auth-msg').innerText = 'ERROR: LOGIN_FAILED';
-        }
-
-        function grant() {
-            document.getElementById('beep').play();
-            document.getElementById('auth-screen').classList.add('fade-out');
-            setTimeout(() => {
-                document.getElementById('auth-screen').style.display = 'none';
-                switchPage('main-content');
-                if(localStorage.getItem('isCrashed') === 'true') activateVisualCrash();
-                startTyped();
-            }, 500);
+            if(document.getElementById('m-key').value.toLowerCase() === 'acagibran') {
+                document.getElementById('auth-screen').classList.add('fade-out');
+                setTimeout(() => {
+                    document.getElementById('auth-screen').style.display = 'none';
+                    switchPage('main-content');
+                    startTyped();
+                }, 500);
+            }
         }
 
         function switchPage(id) {
@@ -154,31 +118,23 @@
             document.getElementById('music-page').style.display = 'none';
             const target = document.getElementById(id);
             target.style.display = 'flex';
-            setTimeout(() => target.style.opacity = '1', 50);
+            setTimeout(() => { target.style.opacity = '1'; }, 50);
         }
 
-        function triggerCrash() {
-            clickCount++;
-            if(clickCount >= 5) {
-                localStorage.setItem('isCrashed', 'true');
-                activateVisualCrash();
-            }
-        }
-
-        function activateVisualCrash() {
-            document.getElementById('content-wrapper').classList.add('crash-active');
-        }
-
-        function logout() {
-            localStorage.removeItem('isCrashed');
-            location.reload();
+        // FUNGSI UNTUK GANTI LAGU SECARA DINAMIS
+        function playTrack(trackId) {
+            const container = document.getElementById('player-container');
+            // Menggunakan format compact agar tidak memakan tempat
+            container.innerHTML = `
+                <iframe style="border-radius:12px" 
+                    src="open.spotify.com/playlist/30Mp9oBYIDEqzGVPBTGHDW?si=8ilvIaWZSdmqrLe8nXcHrA4" 
+                    width="100%" height="80" frameBorder="0" allowfullscreen="" 
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
+                </iframe>`;
         }
 
         function startTyped() {
-            new Typed('#typed', { 
-                strings: ['> SYSTEM_STABLE', '> MUSIC_CONNECTED', '> GIBRAN_ADZHAR_OS'], 
-                typeSpeed: 50, loop: true 
-            });
+            new Typed('#typed', { strings: ['> SYSTEM_STABLE', '> MUSIC_MODULE_ON'], typeSpeed: 50, loop: true });
         }
     </script>
 </body>
