@@ -3,10 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gibran Adzhar | Official</title>
+    <title>Gibran Adzhar | Official Links</title>
     
+    <meta property="og:title" content="Gibran Adzhar | Links">
+    <meta property="og:description" content="Connect with Gibran Adzhar - Digital Content & Developer">
+    <meta property="og:image" content="profile.png">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
 
     <style>
         :root {
@@ -14,18 +19,18 @@
             --text: #ffffff;
             --accent: #22d3ee;
             --card: rgba(255, 255, 255, 0.03);
-            --glow: rgba(34, 211, 238, 0.3);
+            --glow: rgba(34, 211, 238, 0.25);
         }
 
         .light-mode {
-            --bg: #f8fafc;
+            --bg: #f1f5f9;
             --text: #0f172a;
             --accent: #0ea5e9;
             --card: rgba(0, 0, 0, 0.05);
             --glow: rgba(14, 165, 233, 0.1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.4s, color 0.4s; }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -36,76 +41,83 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            transition: 0.5s;
+            position: relative;
         }
 
-        /* Mouse Glow */
+        /* Mouse Follower Glow */
         #cursor-glow {
-            position: fixed; top: 0; left: 0; width: 500px; height: 500px;
+            position: fixed; top: 0; left: 0; width: 600px; height: 600px;
             background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
             border-radius: 50%; pointer-events: none; transform: translate(-50%, -50%);
             z-index: 0;
         }
 
-        .container { position: relative; z-index: 1; text-align: center; width: 90%; max-width: 400px; }
+        .container { position: relative; z-index: 1; text-align: center; width: 90%; max-width: 400px; padding: 20px; }
 
-        /* Foto Profil Glitch Animation */
+        /* Profile Style */
         .profile-img {
-            width: 140px; height: 140px; border-radius: 50%;
+            width: 130px; height: 130px; border-radius: 50%;
             border: 3px solid var(--accent);
             box-shadow: 0 0 30px var(--glow);
             object-fit: cover;
-            transition: 0.3s;
-            cursor: pointer;
+            margin-bottom: 10px;
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .profile-img:hover {
-            filter: hue-rotate(90deg);
-            transform: scale(1.05);
-        }
+        .profile-img:hover { transform: scale(1.1) rotate(5deg); filter: hue-rotate(45deg); }
 
-        h1 { font-size: 2.2rem; font-weight: 800; margin: 15px 0 5px; }
-        
-        /* Typed Text Style */
-        .typing-container { font-size: 1rem; color: var(--accent); font-weight: 500; height: 24px; margin-bottom: 30px; }
+        h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 5px; letter-spacing: -1px; }
+
+        /* Typed Container */
+        .typing-container { font-size: 1rem; color: var(--accent); font-weight: 500; height: 25px; margin-bottom: 30px; }
 
         .links-container { display: flex; flex-direction: column; gap: 15px; }
 
+        /* 3D Tilt Card Style */
         .link-card {
             background: var(--card);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(15px);
             padding: 18px 25px;
             border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
             text-decoration: none; color: var(--text);
             display: flex; align-items: center; justify-content: space-between;
             font-weight: 600;
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
         }
 
-        .link-card:hover {
-            transform: translateX(10px);
-            background: rgba(255,255,255,0.1);
-            border-color: var(--accent);
-        }
+        .link-card:hover { border-color: var(--accent); }
 
-        .icon-text { display: flex; align-items: center; gap: 12px; }
+        .icon-text { display: flex; align-items: center; gap: 15px; pointer-events: none; }
+        .link-card i { font-size: 1.4rem; width: 25px; }
 
-        .controls { display: flex; justify-content: center; gap: 10px; margin-top: 35px; }
-        
+        /* Controls Area */
+        .controls { display: flex; justify-content: center; gap: 12px; margin-top: 35px; }
+
         .btn-control {
             background: var(--card); border: 1px solid rgba(255,255,255,0.1);
-            color: var(--text); padding: 10px 20px; border-radius: 50px;
-            cursor: pointer; font-size: 0.8rem;
+            color: var(--text); padding: 12px 20px; border-radius: 50px;
+            cursor: pointer; font-size: 0.85rem; display: flex; align-items: center; gap: 8px;
         }
 
-        .btn-control:hover { border-color: var(--accent); }
+        .btn-control:hover { border-color: var(--accent); color: var(--accent); }
 
+        footer { margin-top: 50px; font-size: 0.7rem; opacity: 0.3; letter-spacing: 3px; }
+
+        /* Toast Notification */
+        #toast {
+            position: fixed; bottom: -50px; left: 50%; transform: translateX(-50%);
+            background: var(--accent); color: #000; padding: 10px 25px;
+            border-radius: 50px; font-weight: bold; font-size: 0.9rem;
+            transition: 0.5s; z-index: 1000;
+        }
     </style>
 </head>
 <body>
 
     <div id="cursor-glow"></div>
+    <div id="toast">Link Copied! 🚀</div>
     <audio id="click-sound" src="https://www.fesliyanstudios.com/play-mp3/6" preload="auto"></audio>
 
     <div class="container">
@@ -117,69 +129,87 @@
         </div>
 
         <div class="links-container">
-            <a href="https://instagram.com/gbrnadzhr" class="link-card" onclick="playClick()">
+            <a href="https://instagram.com/gbrnadzhr" class="link-card" target="_blank" onmousedown="playClick()">
                 <div class="icon-text">
                     <i class="fa-brands fa-instagram" style="color: #E1306C;"></i>
                     <span>Instagram</span>
                 </div>
-                <i class="fa-solid fa-arrow-right" style="font-size: 0.8rem; opacity: 0.3;"></i>
+                <i class="fa-solid fa-chevron-right" style="opacity: 0.2;"></i>
             </a>
 
-            <a href="https://wa.me/6283827963304" class="link-card" onclick="playClick()">
+            <a href="https://wa.me/6283827963304" class="link-card" target="_blank" onmousedown="playClick()">
                 <div class="icon-text">
                     <i class="fa-brands fa-whatsapp" style="color: #25D366;"></i>
                     <span>WhatsApp</span>
                 </div>
-                <i class="fa-solid fa-arrow-right" style="font-size: 0.8rem; opacity: 0.3;"></i>
+                <i class="fa-solid fa-chevron-right" style="opacity: 0.2;"></i>
             </a>
 
-            <a href="https://github.com/gibranadzhar" class="link-card" onclick="playClick()">
+            <a href="https://github.com/gibranadzhar" class="link-card" target="_blank" onmousedown="playClick()">
                 <div class="icon-text">
                     <i class="fa-brands fa-github"></i>
                     <span>GitHub</span>
                 </div>
-                <i class="fa-solid fa-arrow-right" style="font-size: 0.8rem; opacity: 0.3;"></i>
+                <i class="fa-solid fa-chevron-right" style="opacity: 0.2;"></i>
             </a>
         </div>
 
         <div class="controls">
             <button class="btn-control" onclick="copyLink(); playClick()">
-                <i class="fa-solid fa-copy"></i> Copy Link
+                <i class="fa-solid fa-share-nodes"></i> Share
             </button>
             <button class="btn-control" onclick="toggleTheme(); playClick()">
                 <i class="fa-solid fa-circle-half-stroke"></i> Theme
             </button>
         </div>
+
+        <footer>© 2026 GIBRAN ADZHAR</footer>
     </div>
 
     <script>
-        // Fitur 1: Suara Klik
-        function playClick() {
-            const audio = document.getElementById('click-sound');
-            audio.currentTime = 0;
-            audio.play();
-        }
+        // 1. Inisialisasi Efek 3D Tilt
+        VanillaTilt.init(document.querySelectorAll(".link-card"), {
+            max: 15,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.3,
+        });
 
-        // Fitur 2: Animasi Teks Berjalan (Typed.js)
-        var typed = new Typed('#typed', {
-            strings: ['Digital Content Creator', 'Developer Enthusiast', 'Anime Lover', 'UI/UX Explorer'],
-            typeSpeed: 50,
-            backSpeed: 30,
+        // 2. Efek Teks Berjalan (Updated: Anime Lover -> Gamers)
+        new Typed('#typed', {
+            strings: ['Digital Content Creator', 'Developer Enthusiast', 'UI/UX Explorer', 'Gamers'],
+            typeSpeed: 60,
+            backSpeed: 40,
             loop: true
         });
 
-        // Mouse Follower
+        // 3. Mouse Follower
         const glow = document.getElementById('cursor-glow');
         document.addEventListener('mousemove', (e) => {
             glow.style.left = e.clientX + 'px';
             glow.style.top = e.clientY + 'px';
         });
 
-        function toggleTheme() { document.body.classList.toggle('light-mode'); }
-        function copyLink() { 
+        // 4. Sound Effect
+        function playClick() {
+            const audio = document.getElementById('click-sound');
+            audio.currentTime = 0;
+            audio.play();
+        }
+
+        // 5. Toggle Theme
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+        }
+
+        // 6. Copy Link with Toast Notification
+        function copyLink() {
             navigator.clipboard.writeText(window.location.href);
-            alert("Link copied!");
+            const toast = document.getElementById('toast');
+            toast.style.bottom = '40px';
+            setTimeout(() => { toast.style.bottom = '-50px'; }, 2500);
         }
     </script>
 </body>
 </html>
+
