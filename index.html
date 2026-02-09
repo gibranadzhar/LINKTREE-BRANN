@@ -20,7 +20,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Courier New', Courier, monospace; }
         body { background: var(--bg); color: var(--text); overflow: hidden; height: 100vh; }
 
-        /* --- AUTH SCREEN --- */
+        /* --- LAYAR LOGIN --- */
         #auth-screen {
             position: fixed; width: 100%; height: 100%; background: #000;
             display: flex; justify-content: center; align-items: center; z-index: 100;
@@ -35,7 +35,7 @@
         input { width: 100%; background: transparent; border: 1px solid var(--cyber); color: var(--cyber); padding: 10px; margin-bottom: 10px; outline: none; text-align: center; }
         .main-btn { width: 100%; background: var(--cyber); color: #000; border: none; padding: 12px; font-weight: bold; cursor: pointer; }
 
-        /* --- PAGES --- */
+        /* --- HALAMAN UTAMA --- */
         #main-content, #music-page { 
             display: none; opacity: 0; position: fixed; width: 100%; height: 100%;
             flex-direction: column; justify-content: center; align-items: center; transition: 0.5s; 
@@ -51,13 +51,13 @@
         }
         .link-card:hover { border-color: var(--accent); transform: translateX(5px); background: rgba(29, 185, 84, 0.1); }
 
-        /* --- SPOTIFY --- */
+        /* --- WRAPPER SPOTIFY --- */
         .spotify-wrapper {
             width: 100%; background: #000; border-radius: 12px; overflow: hidden;
             border: 1px solid var(--accent); margin-top: 10px; box-shadow: 0 0 15px rgba(29, 185, 84, 0.3);
         }
 
-        /* --- CRASH ANIMATION --- */
+        /* --- ANIMASI GETAR (CRASH) --- */
         .crash-active { animation: extreme-shake 0.1s infinite !important; filter: hue-rotate(90deg) contrast(150%) !important; }
         @keyframes extreme-shake {
             0% { transform: translate(0, 0); }
@@ -108,7 +108,7 @@
             <h2 style="color: var(--accent); margin-bottom: 15px; font-size: 1rem; letter-spacing: 3px;">DATABASE_PLAYLIST</h2>
             <div class="spotify-wrapper">
                 <iframe style="border-radius:12px" 
-                    src="https://open.spotify.com/embed/playlist/2G9SNoYvj0LOfOatE96oK3?utm_source=generator" 
+                    src="https://open.spotify.com/embed/playlist/4m1uUAtNclbYJ7hXjR0iS9?utm_source=generator&theme=0" 
                     width="100%" height="400" frameBorder="0" allowfullscreen="" 
                     allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
                 </iframe>
@@ -135,7 +135,7 @@
             const u = document.getElementById('l-u').value;
             const p = document.getElementById('l-p').value;
             if(localStorage.getItem('u_'+u) === p) grant();
-            else document.getElementById('auth-msg').innerText = 'ERROR: WRONG_USER_OR_PASS';
+            else document.getElementById('auth-msg').innerText = 'ERROR: LOGIN_FAILED';
         }
 
         function grant() {
@@ -176,7 +176,7 @@
 
         function startTyped() {
             new Typed('#typed', { 
-                strings: ['> SYSTEM_STABLE', '> MUSIC_PLAYER_READY', '> GIBRAN_ADZHAR_OS'], 
+                strings: ['> SYSTEM_STABLE', '> MUSIC_CONNECTED', '> GIBRAN_ADZHAR_OS'], 
                 typeSpeed: 50, loop: true 
             });
         }
