@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link Bio Gibran Adzhar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Desain Latar Belakang */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0f172a; /* Warna gelap elegan */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            padding: 40px 20px;
+        }
+
+        /* Foto Profil */
+        .profile-img {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            border: 2px solid #38bdf8;
+            margin-bottom: 16px;
+            object-fit: cover;
+            background: #1e293b;
+        }
+
+        h1 { 
+            font-size: 1.5rem; 
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        p { 
+            font-size: 0.95rem; 
+            color: #94a3b8; 
+            margin-bottom: 32px; 
+        }
+
+        /* Gaya Tombol Link */
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .link-item {
+            background: #1e293b;
+            color: white;
+            padding: 16px;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            border: 1px solid #334155;
+        }
+
+        /* Efek Hover */
+        .link-item:hover {
+            background: #334155;
+            transform: translateY(-2px);
+            border-color: #38bdf8;
+        }
+
+        .link-item i {
+            font-size: 1.2rem;
+            width: 20px;
+        }
+
+        /* Warna spesifik untuk ikon */
+        .fa-instagram { color: #e1306c; }
+        .fa-whatsapp { color: #25d366; }
+        .fa-github { color: #f0f6fc; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="https://ui-avatars.com/api/?name=Gibran+Adzhar&background=38bdf8&color=fff" alt="Gibran Adzhar" class="profile-img">
+        
+        <h1>Gibran Adzhar</h1>
+        <p>Connect with me on social media</p>
+
+        <div class="links">
+            <a href="https://instagram.com/gbrnadzhr" class="link-item" target="_blank">
+                <i class="fa-brands fa-instagram"></i> Instagram
+            </a>
+
+            <a href="https://wa.me/6283827963304" class="link-item" target="_blank">
+                <i class="fa-brands fa-whatsapp"></i> WhatsApp
+            </a>
+
+            <a href="https://github.com/gibranadzhar" class="link-item" target="_blank">
+                <i class="fa-brands fa-github"></i> GitHub
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
