@@ -3,19 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Link Bio Gibran Adzhar</title>
+    <title>Gibran Adzhar | Links</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Desain Latar Belakang */
+        :root {
+            --bg: #0f172a;
+            --text: #ffffff;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --primary: #38bdf8;
+            --accent: #818cf8;
+        }
+
+        .light-mode {
+            --bg: #f1f5f9;
+            --text: #1e293b;
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --primary: #0284c7;
+            --accent: #4f46e5;
+        }
+
+        * { transition: all 0.3s ease; box-sizing: border-box; }
+
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #0f172a; /* Warna gelap elegan */
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Tombol Toggle Tema */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            color: var(--text);
+            backdrop-filter: blur(10px);
         }
 
         .container {
@@ -25,91 +57,126 @@
             padding: 40px 20px;
         }
 
-        /* Foto Profil */
         .profile-img {
-            width: 96px;
-            height: 96px;
+            width: 110px; height: 110px;
             border-radius: 50%;
-            border: 2px solid #38bdf8;
-            margin-bottom: 16px;
-            object-fit: cover;
-            background: #1e293b;
+            border: 3px solid var(--primary);
+            margin-bottom: 15px;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
         }
 
-        h1 { 
-            font-size: 1.5rem; 
-            margin-bottom: 8px;
-            letter-spacing: -0.5px;
-        }
+        h1 { font-size: 1.8rem; margin: 10px 0; }
+        .tagline { opacity: 0.7; margin-bottom: 30px; font-size: 0.9rem; }
 
-        p { 
-            font-size: 0.95rem; 
-            color: #94a3b8; 
-            margin-bottom: 32px; 
-        }
-
-        /* Gaya Tombol Link */
-        .links {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
+        .links { display: flex; flex-direction: column; gap: 15px; }
 
         .link-item {
-            background: #1e293b;
-            color: white;
-            padding: 16px;
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            color: var(--text);
+            padding: 16px 20px;
             text-decoration: none;
-            border-radius: 12px;
-            font-weight: 500;
+            border-radius: 16px;
+            font-weight: 600;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 12px;
-            transition: all 0.3s ease;
-            border: 1px solid #334155;
+            justify-content: space-between;
+            border: 1px solid rgba(255,255,255,0.1);
+            animation: fadeIn 0.5s ease forwards;
         }
 
-        /* Efek Hover */
         .link-item:hover {
-            background: #334155;
-            transform: translateY(-2px);
-            border-color: #38bdf8;
+            transform: translateY(-3px) scale(1.02);
+            border-color: var(--primary);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
-        .link-item i {
-            font-size: 1.2rem;
-            width: 20px;
+        .icon-group { display: flex; align-items: center; gap: 12px; }
+        .link-item i { font-size: 1.3rem; }
+
+        /* Tombol Share */
+        .share-btn {
+            margin-top: 30px;
+            background: none;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
         }
 
-        /* Warna spesifik untuk ikon */
-        .fa-instagram { color: #e1306c; }
-        .fa-whatsapp { color: #25d366; }
-        .fa-github { color: #f0f6fc; }
+        .share-btn:hover { background: var(--primary); color: white; }
+
+        footer { margin-top: 40px; font-size: 0.7rem; opacity: 0.5; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
 
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <i class="fa-solid fa-moon" id="theme-icon"></i>
+    </button>
+
     <div class="container">
-        <img src="https://ui-avatars.com/api/?name=Gibran+Adzhar&background=38bdf8&color=fff" alt="Gibran Adzhar" class="profile-img">
-        
+        <img src="https://ui-avatars.com/api/?name=Gibran+Adzhar&background=38bdf8&color=fff&size=128" class="profile-img">
         <h1>Gibran Adzhar</h1>
-        <p>Connect with me on social media</p>
+        <p class="tagline">Digital Content & Developer</p>
 
         <div class="links">
             <a href="https://instagram.com/gbrnadzhr" class="link-item" target="_blank">
-                <i class="fa-brands fa-instagram"></i> Instagram
+                <div class="icon-group">
+                    <i class="fa-brands fa-instagram" style="color: #E1306C;"></i>
+                    <span>Instagram</span>
+                </div>
+                <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8rem; opacity: 0.5;"></i>
             </a>
 
             <a href="https://wa.me/6283827963304" class="link-item" target="_blank">
-                <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                <div class="icon-group">
+                    <i class="fa-brands fa-whatsapp" style="color: #25D366;"></i>
+                    <span>WhatsApp</span>
+                </div>
+                <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8rem; opacity: 0.5;"></i>
             </a>
 
             <a href="https://github.com/gibranadzhar" class="link-item" target="_blank">
-                <i class="fa-brands fa-github"></i> GitHub
+                <div class="icon-group">
+                    <i class="fa-brands fa-github"></i>
+                    <span>GitHub</span>
+                </div>
+                <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8rem; opacity: 0.5;"></i>
             </a>
         </div>
+
+        <button class="share-btn" onclick="copyLink()">
+            <i class="fa-solid fa-share"></i> Bagikan Link Bio
+        </button>
+
+        <footer>© 2026 GIBRAN ADZHAR</footer>
     </div>
 
+    <script>
+        // Fungsi Dark/Light Mode
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const icon = document.getElementById('theme-icon');
+            if (document.body.classList.contains('light-mode')) {
+                icon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                icon.classList.replace('fa-sun', 'fa-moon');
+            }
+        }
+
+        // Fungsi Copy Link
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href);
+            alert("Link berhasil disalin!");
+        }
+    </script>
 </body>
 </html>
