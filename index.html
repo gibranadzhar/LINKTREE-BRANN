@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gibran Adzhar | Encrypted Access</title>
+    <title>Gibran Adzhar | Access Control</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
@@ -12,8 +12,8 @@
         :root {
             --bg: #020617;
             --accent: #22d3ee;
-            --success: #22c55e;
-            --error: #ef4444;
+            --success: #00ff88;
+            --error: #ff3333;
             --text: #f8fafc;
         }
 
@@ -21,82 +21,71 @@
 
         body { background: var(--bg); color: var(--text); overflow: hidden; height: 100vh; }
 
-        /* --- LOGIN SCREEN --- */
         #login-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 100; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; transition: 1s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #000; z-index: 100; display: flex; 
+            justify-content: center; align-items: center; transition: 1s ease-in-out;
         }
 
         .terminal-box {
-            width: 90%; max-width: 350px; padding: 25px; border: 1px solid var(--accent);
-            background: rgba(34, 211, 238, 0.02); box-shadow: 0 0 20px rgba(34, 211, 238, 0.2);
-            text-align: center; position: relative;
+            width: 90%; max-width: 350px; padding: 30px; border: 1px solid var(--accent);
+            background: rgba(34, 211, 238, 0.05); box-shadow: 0 0 20px rgba(34, 211, 238, 0.2);
+            text-align: center;
         }
 
-        .status-msg { font-size: 0.7rem; color: var(--accent); margin-bottom: 20px; text-align: left; line-height: 1.5; }
+        .status-msg { font-size: 0.7rem; color: var(--accent); margin-bottom: 20px; text-align: left; }
 
         .login-input {
             width: 100%; background: transparent; border: 1px solid rgba(34, 211, 238, 0.3);
             color: var(--accent); padding: 12px; outline: none; margin-bottom: 15px;
-            text-align: center; font-size: 1rem; letter-spacing: 2px;
+            text-align: center; font-size: 1rem;
         }
 
         .login-btn {
             width: 100%; background: var(--accent); color: #000; border: none;
-            padding: 12px; font-weight: 900; cursor: pointer; text-transform: uppercase;
+            padding: 12px; font-weight: 900; cursor: pointer;
         }
 
-        #feedback-msg { font-weight: bold; font-size: 0.8rem; margin-top: 15px; letter-spacing: 2px; height: 20px; }
+        #feedback-msg { font-weight: bold; font-size: 0.8rem; margin-top: 15px; min-height: 20px; }
 
-        /* --- MAIN CONTENT --- */
+        /* CONTENT */
         #main-content {
             display: none; opacity: 0; justify-content: center; align-items: center;
             min-height: 100vh; transition: 1.5s;
         }
 
-        .container { text-align: center; width: 90%; max-width: 400px; }
         .profile-img { width: 130px; height: 130px; border-radius: 50%; border: 3px solid var(--accent); margin-bottom: 20px; }
         .links-container { display: flex; flex-direction: column; gap: 12px; }
         .link-card { background: rgba(255,255,255,0.03); padding: 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); text-decoration: none; color: #fff; display: flex; justify-content: space-between; }
 
         /* Animations */
-        .shake { animation: shake 0.4s; border-color: var(--error) !important; box-shadow: 0 0 30px var(--error) !important; }
+        .shake { animation: shake 0.4s; border-color: var(--error) !important; }
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
             25% { transform: translateX(-10px); }
             75% { transform: translateX(10px); }
         }
-        .fade-out { opacity: 0; transform: scale(1.5); pointer-events: none; }
+        .fade-out { opacity: 0; transform: scale(1.1); pointer-events: none; }
     </style>
 </head>
 <body>
 
-    <audio id="alarm-sound" src="https://www.soundjay.com/buttons/beep-04.mp3" preload="auto"></audio>
-    <audio id="success-sound" src="https://www.soundjay.com/buttons/button-3.mp3" preload="auto"></audio>
+    <audio id="alarm-sound" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" preload="auto"></audio>
+    <audio id="success-sound" src="https://assets.mixkit.co/active_storage/sfx/1614/1614-preview.mp3" preload="auto"></audio>
 
     <div id="login-screen">
         <div class="terminal-box" id="gateBox">
-            <div class="status-msg">
-                > SYSTEM: READY<br>
-                > ENCRYPTION: ACTIVE<br>
-                > INPUT_KEY_
-            </div>
-            <input type="password" class="login-input" id="accessKey" placeholder="********" onkeydown="if(event.key==='Enter') verify()">
-            <button class="login-btn" onclick="verify()">AUTHORIZE</button>
+            <div class="status-msg">> SECURITY_OVERRIDE: ACTIVE<br>> IDENTITY_CHECK: GIBRAN_SYS</div>
+            <input type="password" class="login-input" id="accessKey" placeholder="KEY_GIBRAN" onkeydown="if(event.key==='Enter') verify()">
+            <button class="login-btn" onclick="verify()">DECRYPT ACCESS</button>
             <div id="feedback-msg"></div>
         </div>
     </div>
 
     <div id="main-content">
-        <div class="container">
+        <div class="container" style="text-align: center; width: 90%; max-width: 400px;">
             <img src="profile.png" alt="Gibran" class="profile-img">
-            <h1 style="letter-spacing: 3px;">GIBRAN ADZHAR</h1>
-            <div id="typed-strings" style="display: none;">
-                <p>> ACCESS GRANTED</p>
-                <p>> LOADING DATA...</p>
-                <p>> WELCOME USER_GIBRAN</p>
-            </div>
+            <h1 style="letter-spacing: 5px; margin-bottom: 10px;">GIBRAN ADZHAR</h1>
             <div style="color: var(--accent); margin-bottom: 30px;"><span id="typed"></span></div>
 
             <div class="links-container">
@@ -116,7 +105,7 @@
             const success = document.getElementById('success-sound');
             
             if(input.value.toLowerCase() === 'acagibran') {
-                // PASSWORD BENAR
+                // AKSES BENAR
                 success.play();
                 feedback.style.color = "var(--success)";
                 feedback.innerText = "PASSWORD BENAR: ACCESS GRANTED";
@@ -130,26 +119,23 @@
                         main.style.display = 'flex';
                         setTimeout(() => { main.style.opacity = '1'; startTyped(); }, 50);
                     }, 1000);
-                }, 1000);
+                }, 800);
 
             } else {
-                // PASSWORD SALAH
-                alarm.play(); // Bunyikan alarm
+                // AKSES SALAH
+                alarm.play(); 
                 box.classList.add('shake');
                 feedback.style.color = "var(--error)";
                 feedback.innerText = "PASSWORD SALAH: ACCESS DENIED";
                 input.value = '';
-                
-                setTimeout(() => {
-                    box.classList.remove('shake');
-                }, 400);
+                setTimeout(() => box.classList.remove('shake'), 400);
             }
         }
 
         function startTyped() {
             new Typed('#typed', {
-                strings: ['DIGITAL CONTENT CREATOR', 'DEVELOPER ENTHUSIAST', 'GAMER', 'SYSTEM ONLINE.'],
-                typeSpeed: 40,
+                strings: ['> WELCOME BACK, GIBRAN', '> SYSTEM STABLE', '> GAMER_LEVEL_99', '> ONLINE.'],
+                typeSpeed: 50,
                 backSpeed: 20,
                 loop: true
             });
