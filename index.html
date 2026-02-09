@@ -7,175 +7,175 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg: #0f172a;
+            --bg: #111827;
             --text: #ffffff;
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --primary: #38bdf8;
-            --accent: #818cf8;
+            --card: rgba(31, 41, 55, 0.6);
+            --accent: #22d3ee;
+            --glow: rgba(34, 211, 238, 0.5);
         }
 
         .light-mode {
-            --bg: #f1f5f9;
-            --text: #1e293b;
-            --card-bg: rgba(255, 255, 255, 0.7);
-            --primary: #0284c7;
-            --accent: #4f46e5;
+            --bg: #f3f4f6;
+            --text: #1f2937;
+            --card: rgba(255, 255, 255, 0.8);
+            --accent: #0891b2;
+            --glow: rgba(8, 145, 178, 0.2);
         }
-
-        * { transition: all 0.3s ease; box-sizing: border-box; }
 
         body {
             font-family: 'Inter', sans-serif;
             background: var(--bg);
             color: var(--text);
+            margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
-            overflow-x: hidden;
-        }
-
-        /* Tombol Toggle Tema */
-        .theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--card-bg);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
-            color: var(--text);
-            backdrop-filter: blur(10px);
+            transition: 0.3s;
         }
 
         .container {
-            text-align: center;
             width: 90%;
-            max-width: 400px;
-            padding: 40px 20px;
+            max-width: 450px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Foto Profil dengan Efek Glow Cyan */
+        .profile-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
         }
 
         .profile-img {
-            width: 110px; height: 110px;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
-            border: 3px solid var(--primary);
-            margin-bottom: 15px;
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+            border: 4px solid var(--accent);
+            box-shadow: 0 0 25px var(--glow);
+            object-fit: cover;
         }
 
-        h1 { font-size: 1.8rem; margin: 10px 0; }
-        .tagline { opacity: 0.7; margin-bottom: 30px; font-size: 0.9rem; }
+        h1 { font-size: 2rem; margin: 10px 0 5px; font-weight: 700; }
+        .tagline { opacity: 0.6; margin-bottom: 30px; font-size: 0.95rem; }
 
-        .links { display: flex; flex-direction: column; gap: 15px; }
+        /* Tombol List ala Gambar */
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
 
-        .link-item {
-            background: var(--card-bg);
-            backdrop-filter: blur(15px);
-            color: var(--text);
-            padding: 16px 20px;
+        .link-card {
+            background: var(--card);
+            backdrop-filter: blur(10px);
+            padding: 18px 25px;
+            border-radius: 50px; /* Bentuk Pill */
+            border: 1px solid rgba(255,255,255,0.1);
             text-decoration: none;
-            border-radius: 16px;
-            font-weight: 600;
+            color: var(--text);
             display: flex;
             align-items: center;
             justify-content: space-between;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .link-card:hover {
+            transform: scale(1.03);
+            border-color: var(--accent);
+            background: rgba(34, 211, 238, 0.1);
+        }
+
+        .icon-text { display: flex; align-items: center; gap: 15px; }
+        .link-card i { font-size: 1.4rem; width: 25px; }
+        .dot { height: 10px; width: 10px; background: var(--accent); border-radius: 50%; opacity: 0.5; }
+
+        /* Bottom Controls */
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            background: var(--card);
+            padding: 10px;
+            border-radius: 50px;
             border: 1px solid rgba(255,255,255,0.1);
-            animation: fadeIn 0.5s ease forwards;
         }
 
-        .link-item:hover {
-            transform: translateY(-3px) scale(1.02);
-            border-color: var(--primary);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        .icon-group { display: flex; align-items: center; gap: 12px; }
-        .link-item i { font-size: 1.3rem; }
-
-        /* Tombol Share */
-        .share-btn {
-            margin-top: 30px;
-            background: none;
-            border: 1px solid var(--primary);
-            color: var(--primary);
-            padding: 8px 16px;
-            border-radius: 20px;
+        .btn-control {
+            background: rgba(255,255,255,0.05);
+            border: none;
+            color: var(--text);
+            padding: 10px 20px;
+            border-radius: 40px;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
         }
 
-        .share-btn:hover { background: var(--primary); color: white; }
+        .btn-control:hover { background: var(--accent); color: #000; }
 
-        footer { margin-top: 40px; font-size: 0.7rem; opacity: 0.5; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
     </style>
 </head>
 <body>
 
-    <button class="theme-toggle" onclick="toggleTheme()">
-        <i class="fa-solid fa-moon" id="theme-icon"></i>
-    </button>
-
     <div class="container">
-        <img src="https://ui-avatars.com/api/?name=Gibran+Adzhar&background=38bdf8&color=fff&size=128" class="profile-img">
+        <div class="profile-wrapper">
+            <img src="profile.png" alt="Gibran Adzhar" class="profile-img">
+        </div>
+
         <h1>Gibran Adzhar</h1>
         <p class="tagline">Digital Content & Developer</p>
 
-        <div class="links">
-            <a href="https://instagram.com/gbrnadzhr" class="link-item" target="_blank">
-                <div class="icon-group">
+        <div class="links-container">
+            <a href="https://instagram.com/gbrnadzhr" class="link-card" target="_blank">
+                <div class="icon-text">
                     <i class="fa-brands fa-instagram" style="color: #E1306C;"></i>
                     <span>Instagram</span>
                 </div>
-                <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8rem; opacity: 0.5;"></i>
+                <div class="dot"></div>
             </a>
 
-            <a href="https://wa.me/6283827963304" class="link-item" target="_blank">
-                <div class="icon-group">
+            <a href="https://wa.me/6283827963304" class="link-card" target="_blank">
+                <div class="icon-text">
                     <i class="fa-brands fa-whatsapp" style="color: #25D366;"></i>
                     <span>WhatsApp</span>
                 </div>
-                <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8rem; opacity: 0.5;"></i>
+                <div class="dot"></div>
             </a>
 
-            <a href="https://github.com/gibranadzhar" class="link-item" target="_blank">
-                <div class="icon-group">
+            <a href="https://github.com/gibranadzhar" class="link-card" target="_blank">
+                <div class="icon-text">
                     <i class="fa-brands fa-github"></i>
                     <span>GitHub</span>
                 </div>
-                <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8rem; opacity: 0.5;"></i>
+                <div class="dot"></div>
             </a>
         </div>
 
-        <button class="share-btn" onclick="copyLink()">
-            <i class="fa-solid fa-share"></i> Bagikan Link Bio
-        </button>
-
-        <footer>© 2026 GIBRAN ADZHAR</footer>
+        <div class="controls">
+            <button class="btn-control" onclick="copyLink()">
+                <i class="fa-solid fa-share-nodes"></i> Bagikan Link
+            </button>
+            <button class="btn-control" onclick="toggleTheme()">
+                <i class="fa-solid fa-circle-half-stroke"></i> Mode
+            </button>
+        </div>
     </div>
 
     <script>
-        // Fungsi Dark/Light Mode
         function toggleTheme() {
             document.body.classList.toggle('light-mode');
-            const icon = document.getElementById('theme-icon');
-            if (document.body.classList.contains('light-mode')) {
-                icon.classList.replace('fa-moon', 'fa-sun');
-            } else {
-                icon.classList.replace('fa-sun', 'fa-moon');
-            }
         }
 
-        // Fungsi Copy Link
         function copyLink() {
             navigator.clipboard.writeText(window.location.href);
-            alert("Link berhasil disalin!");
+            alert("Link profil disalin!");
         }
     </script>
 </body>
