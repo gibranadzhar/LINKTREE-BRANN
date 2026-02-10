@@ -15,6 +15,7 @@
             --cyber: #22d3ee;
             --text: #f8fafc;
             --error: #ff3333;
+            --tele: #0088cc;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Courier New', Courier, monospace; }
@@ -39,16 +40,31 @@
         }
 
         .container { text-align: center; width: 90%; max-width: 400px; }
-        .profile-img { width: 110px; height: 110px; border-radius: 50%; border: 2px solid var(--cyber); margin-bottom: 20px; cursor: pointer; }
+        .profile-img { width: 110px; height: 110px; border-radius: 50%; border: 2px solid var(--cyber); margin-bottom: 20px; cursor: pointer; object-fit: cover; }
         
-        /* --- LIST LAGU --- */
+        .link-card { 
+            display: flex; justify-content: space-between; background: rgba(255,255,255,0.05); 
+            padding: 15px; border: 1px solid rgba(34, 211, 238, 0.2); margin-bottom: 10px; 
+            text-decoration: none; color: white; border-radius: 8px; cursor: pointer; transition: 0.3s;
+        }
+        .link-card:hover { border-color: var(--cyber); transform: translateX(5px); }
+        .tele-btn:hover { border-color: var(--tele); background: rgba(0, 136, 204, 0.1); }
+
+        /* --- MUSIC LIST --- */
         .track-list { margin-top: 20px; text-align: left; background: rgba(255,255,255,0.05); border-radius: 10px; border: 1px solid rgba(34, 211, 238, 0.2); }
         .track-item { padding: 15px; border-bottom: 1px solid rgba(34, 211, 238, 0.1); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
         .track-item:hover { background: rgba(29, 185, 84, 0.1); color: var(--accent); }
-        .track-item i { font-size: 0.8rem; }
 
-        /* --- SPOTIFY PLAYER (STIFF/FIXED) --- */
         #player-container { width: 100%; margin-top: 20px; min-height: 80px; }
+
+        /* --- CRASH --- */
+        .crash-active { animation: extreme-shake 0.1s infinite !important; filter: hue-rotate(90deg) contrast(150%) !important; }
+        @keyframes extreme-shake {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(-4px, 4px); }
+            50% { transform: translate(4px, -4px); }
+            100% { transform: translate(0, 0); }
+        }
 
         .fade-out { opacity: 0; pointer-events: none; transform: scale(0.9); transition: 0.5s; }
     </style>
@@ -57,57 +73,59 @@
 
     <div id="auth-screen">
         <div class="auth-container">
-            <p style="color:var(--cyber); font-size:0.7rem">> ACCESS_ID_REQUIRED</p>
+            <p style="color:var(--cyber); font-size:0.7rem">> ACCESS_SYSTEM_ID</p>
             <input type="password" id="m-key" placeholder="MASTER_KEY">
-            <button class="main-btn" onclick="authKey()">VERIFY</button>
+            <button class="main-btn" onclick="authKey()">LOGIN</button>
         </div>
     </div>
 
     <div id="main-content">
-        <div class="container">
-            <img src="profile.png" class="profile-img">
-            <h1>GIBRAN ADZHAR</h1>
-            <div style="color: var(--cyber); margin-bottom: 25px;"><span id="typed"></span></div>
+        <div id="content-wrapper" class="container">
+            <img src="profile.png" class="profile-img" onclick="triggerCrash()">
+            <h1 style="font-size: 1.5rem; letter-spacing: 2px;">GIBRAN ADZHAR</h1>
+            <div style="color: var(--cyber); margin-bottom: 25px; font-size: 0.8rem; height: 20px;"><span id="typed"></span></div>
             
-            <div onclick="switchPage('music-page')" style="cursor:pointer; border: 1px solid var(--accent); padding: 15px; border-radius: 8px; color: var(--accent);">
-                <span>[ OPEN_PLAYER_STATION ]</span>
+            <div onclick="switchPage('music-page')" class="link-card" style="border-color: var(--accent);">
+                <span style="color: var(--accent);">[ MUSIC_PLAYER ]</span><i class="fa-solid fa-compact-disc fa-spin"></i>
             </div>
             
-            <button onclick="location.reload()" style="background:none; color:var(--error); border:none; margin-top:40px; cursor:pointer;">[ LOGOUT ]</button>
+            <a href="https://t.me/gbrnadzhr" class="link-card tele-btn" target="_blank"><span>TELEGRAM</span><i class="fa-brands fa-telegram"></i></a>
+            <a href="https://instagram.com/gbrnadzhr" class="link-card" target="_blank"><span>INSTAGRAM</span><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://wa.me/6283827963304" class="link-card" target="_blank"><span>WHATSAPP</span><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="https://github.com/gibranadzhar" class="link-card" target="_blank"><span>GITHUB</span><i class="fa-brands fa-github"></i></a>
+            
+            <button id="logout-btn" onclick="logout()" style="background:var(--error); border:none; color:#000; padding:10px; width:100%; font-weight:bold; cursor:pointer; margin-top:30px; border-radius: 5px;">[ DISCONNECT ]</button>
         </div>
     </div>
 
     <div id="music-page">
         <div class="container">
-            <h2 style="color: var(--accent); font-size: 0.9rem; letter-spacing: 2px;">SELECT_YOUR_TRACK</h2>
-            
-            <div id="player-container">
-                <p style="font-size: 0.7rem; color: #444; padding: 20px;">Klik lagu di bawah untuk memutar...</p>
-            </div>
+            <h2 style="color: var(--accent); font-size: 0.9rem;">PLAYLIST_SINGLE_TRACK</h2>
+            <div id="player-container"><p style="font-size: 0.6rem; color: #555;">Pilih lagu di bawah...</p></div>
 
             <div class="track-list">
                 <div class="track-item" onclick="playTrack('7n05g9m4A8p13zXv7iN34M')">
-                    <span>01. Lagu Pilihan Gibran</span>
-                    <i class="fa-solid fa-play"></i>
+                    <span>01. Gibran's Choice</span><i class="fa-solid fa-play"></i>
                 </div>
-
                 <div class="track-item" onclick="playTrack('4cOdzhRZWLZBvfb9909090')">
-                    <span>02. Chill Beats</span>
-                    <i class="fa-solid fa-play"></i>
+                    <span>02. Cyber Beats</span><i class="fa-solid fa-play"></i>
                 </div>
             </div>
 
-            <button class="main-btn" style="margin-top: 30px; background: transparent; border: 1px solid var(--cyber); color: var(--cyber);" onclick="switchPage('main-content')">KEMBALI</button>
+            <button class="main-btn" style="margin-top: 30px; background: transparent; border: 1px solid var(--cyber); color: var(--cyber);" onclick="switchPage('main-content')">BACK_TO_PROFILE</button>
         </div>
     </div>
 
     <script>
+        let clickCount = 0;
+
         function authKey() {
             if(document.getElementById('m-key').value.toLowerCase() === 'acagibran') {
                 document.getElementById('auth-screen').classList.add('fade-out');
                 setTimeout(() => {
                     document.getElementById('auth-screen').style.display = 'none';
                     switchPage('main-content');
+                    if(localStorage.getItem('isCrashed') === 'true') activateVisualCrash();
                     startTyped();
                 }, 500);
             }
@@ -118,23 +136,40 @@
             document.getElementById('music-page').style.display = 'none';
             const target = document.getElementById(id);
             target.style.display = 'flex';
-            setTimeout(() => { target.style.opacity = '1'; }, 50);
+            setTimeout(() => target.style.opacity = '1', 50);
         }
 
-        // FUNGSI UNTUK GANTI LAGU SECARA DINAMIS
         function playTrack(trackId) {
-            const container = document.getElementById('player-container');
-            // Menggunakan format compact agar tidak memakan tempat
-            container.innerHTML = `
+            document.getElementById('player-container').innerHTML = `
                 <iframe style="border-radius:12px" 
-                    src="open.spotify.com/playlist/30Mp9oBYIDEqzGVPBTGHDW?si=8ilvIaWZSdmqrLe8nXcHrA4" 
+                    src="https://open.spotify.com/embed/track/${trackId}?utm_source=generator&theme=0" 
                     width="100%" height="80" frameBorder="0" allowfullscreen="" 
                     allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
                 </iframe>`;
         }
 
+        function triggerCrash() {
+            clickCount++;
+            if(clickCount >= 5) {
+                localStorage.setItem('isCrashed', 'true');
+                activateVisualCrash();
+            }
+        }
+
+        function activateVisualCrash() {
+            document.getElementById('content-wrapper').classList.add('crash-active');
+        }
+
+        function logout() {
+            localStorage.removeItem('isCrashed');
+            location.reload();
+        }
+
         function startTyped() {
-            new Typed('#typed', { strings: ['> SYSTEM_STABLE', '> MUSIC_MODULE_ON'], typeSpeed: 50, loop: true });
+            new Typed('#typed', { 
+                strings: ['> TELE_CONNECTED', '> GIBRAN_SYSTEM_READY'], 
+                typeSpeed: 50, loop: true 
+            });
         }
     </script>
 </body>
